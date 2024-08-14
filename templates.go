@@ -1,4 +1,4 @@
-package shared
+package main
 
 var TemplateParseString1 = `
 Terminal    : {{.Terminal}}

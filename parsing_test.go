@@ -1,7 +1,6 @@
-package parsing
+package main
 
 import (
-	"github.com/raufhm/levelfive-lib/shared"
 	"testing"
 	"time"
 )
@@ -133,7 +132,7 @@ Name Fries 1.00 2.50
 func TestParseTemplateTicket(t *testing.T) {
 	type args struct {
 		tmplStr string
-		ticket  shared.Ticket
+		ticket  Ticket
 	}
 
 	nParser := NewParser()
@@ -147,7 +146,7 @@ func TestParseTemplateTicket(t *testing.T) {
 			name: "empty template",
 			args: args{
 				tmplStr: "",
-				ticket:  shared.Ticket{},
+				ticket:  Ticket{},
 			},
 			want:    "",
 			wantErr: false,
@@ -155,8 +154,8 @@ func TestParseTemplateTicket(t *testing.T) {
 		{
 			name: "parse 1",
 			args: args{
-				tmplStr: shared.TemplateParseString1,
-				ticket: shared.Ticket{
+				tmplStr: TemplateParseString1,
+				ticket: Ticket{
 					Terminal:    "Terminal 1",
 					LoginUser:   "login user test",
 					Date:        time.Now(),
@@ -164,24 +163,24 @@ func TestParseTemplateTicket(t *testing.T) {
 					PaymentDate: time.Now(),
 					PaymentTime: "14:31",
 					TagPax:      "4",
-					Orders: []shared.Order{
+					Orders: []Order{
 						{Name: "Burger", Quantity: 2, Price: 5.0},
 						{Name: "Fries", Quantity: 1, Price: 2.5},
 					},
-					Discounts: []shared.Discount{
+					Discounts: []Discount{
 						{Name: "Promo 10%", Amount: -1.0},
 					},
-					Services: []shared.Service{
+					Services: []Service{
 						{Name: "Service Charge", Amount: 1.5},
 					},
-					Taxes: []shared.Tax{
+					Taxes: []Tax{
 						{Name: "GST", Amount: 0.35},
 					},
-					Payments: []shared.Payment{
+					Payments: []Payment{
 						{
 							Name:               "Cash",
 							Tendered:           9.0,
-							PaymentInformation: shared.PaymentInfo{RefNo: "123456"}},
+							PaymentInformation: PaymentInfo{RefNo: "123456"}},
 					},
 				},
 			},
@@ -228,7 +227,7 @@ test payment details
 func TestParseTemplatePrinter(t *testing.T) {
 	type args struct {
 		tmplStr    string
-		rootObject shared.RootObject
+		rootObject RootObject
 	}
 
 	nParser := NewParser()
@@ -242,7 +241,7 @@ func TestParseTemplatePrinter(t *testing.T) {
 			name: "empty template",
 			args: args{
 				tmplStr:    "",
-				rootObject: shared.RootObject{},
+				rootObject: RootObject{},
 			},
 			want:    "",
 			wantErr: false,
@@ -250,8 +249,8 @@ func TestParseTemplatePrinter(t *testing.T) {
 		{
 			name: "parse 1",
 			args: args{
-				tmplStr: shared.TemplateParseString2,
-				rootObject: shared.RootObject{
+				tmplStr: TemplateParseString2,
+				rootObject: RootObject{
 					TicketNo:       "1000",
 					Date:           "12/08/2024",
 					Time:           "10:15",

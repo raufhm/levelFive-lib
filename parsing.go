@@ -1,8 +1,7 @@
-package parsing
+package main
 
 import (
 	"fmt"
-	"github.com/raufhm/levelfive-lib/shared"
 	"strings"
 	"text/template"
 	"time"
@@ -14,17 +13,17 @@ func NewParser() *Parser {
 	return &Parser{}
 }
 
-func (p *Parser) ParseMessageForPrint(templateString string, ro shared.RootObject) (string, error) {
-	formattedStr, err := ParseTemplateTemplateV1[shared.RootObject](templateString, ro, nil)
+func (p *Parser) ParseMessageForPrint(templateString string, ro RootObject) (string, error) {
+	formattedStr, err := ParseTemplateTemplateV1[RootObject](templateString, ro, nil)
 	if err != nil {
 		return "", err
 	}
 	return formattedStr, nil
 }
 
-func (p *Parser) ParseMessageOnly(templateString string, ticket shared.Ticket) (string, error) {
+func (p *Parser) ParseMessageOnly(templateString string, ticket Ticket) (string, error) {
 	fnMap := FuncMapTicket(ticket)
-	formattedStr, err := ParseTemplateTemplateV1[shared.Ticket](templateString, ticket, &fnMap)
+	formattedStr, err := ParseTemplateTemplateV1[Ticket](templateString, ticket, &fnMap)
 	if err != nil {
 		return "", err
 	}
@@ -39,7 +38,7 @@ func FormatDate(date time.Time, format string) string {
 	return date.Format(format)
 }
 
-func FuncMapTicket(ticket shared.Ticket) template.FuncMap {
+func FuncMapTicket(ticket Ticket) template.FuncMap {
 	return template.FuncMap{
 		"FormatDecimal": FormatDecimal,
 		"FormatDate":    FormatDate,

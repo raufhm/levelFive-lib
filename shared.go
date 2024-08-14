@@ -1,11 +1,8 @@
-package shared
+package main
 
 import "time"
 
-const (
-	DefaultAddress = "localhost"
-	DefaultPort    = "8000"
-)
+const DefaultPrinterName = "printer levelfive"
 
 type Ticket struct {
 	Terminal    string
@@ -62,13 +59,4 @@ type RootObject struct {
 	Discounts      string
 	TicketTotal    string
 	PaymentDetails string
-}
-
-type PrinterArgs struct {
-	NetworkArgs *NetworkArgs
-}
-
-type NetworkArgs struct {
-	Address string
-	Ports   string
 }
