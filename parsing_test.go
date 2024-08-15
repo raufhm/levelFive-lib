@@ -1,6 +1,7 @@
 package main
 
 import (
+	"fmt"
 	"testing"
 	"time"
 )
@@ -96,8 +97,8 @@ func TestFormatDate(t *testing.T) {
 var wantTemplate1 = `
 Terminal    : Terminal 1
 Cashier     : login user test
-Date        : 14/08/2024 14:30
-Bill        : 14/08/2024 14:31
+Date        : %s 14:30
+Bill        : %s 14:31
 [Cover: 4]
 
 #Ticket Orders#
@@ -106,7 +107,7 @@ Name: Fries 1.00 2.50
 
 
 #Ticket.Discounts#
-Discount: Promo 10% | Amount: -1.00
+Discount: Promo 10%% | Amount: -1.00
 
 
 #Ticket.Services#
@@ -129,11 +130,18 @@ Name Fries 1.00 2.50
 
 `
 
+func getDateToday() string {
+	now := time.Now()
+	return now.Format("02/01/2006")
+}
+
 func TestParseTemplateTicket(t *testing.T) {
 	type args struct {
 		tmplStr string
 		ticket  Ticket
 	}
+
+	tdyDt := getDateToday()
 
 	nParser := NewParser()
 	tests := []struct {
@@ -184,7 +192,7 @@ func TestParseTemplateTicket(t *testing.T) {
 					},
 				},
 			},
-			want:    wantTemplate1,
+			want:    fmt.Sprintf(wantTemplate1, tdyDt, tdyDt),
 			wantErr: false,
 		},
 	}

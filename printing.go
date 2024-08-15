@@ -1,3 +1,21 @@
+/*
+Provide a utility
+to managing and printing documents to both local and remote printers using the Common Unix Printing System (CUPS).
+
+Key Features:
+- Automatically identifies the default printer using `lpstat`.
+- Supports printing to both local and remote printers.
+- Utilizes SCP for securely transferring print jobs to remote machines.
+- Provides an abstracted command execution mechanism for easier testing and flexibility.
+
+References:
+- CUPS (Common Unix Printing System) options:
+https://opensource.apple.com/source/cups/cups-450/cups/doc/help/options.html
+
+Usage:
+- Instantiate the Printer struct with the necessary details (e.g., printer name, host details for remote printers).
+- Call the `Do()` method on the Printer instance to execute the print job.
+*/
 package main
 
 import (
@@ -30,12 +48,10 @@ func ParseOutput(output string) string {
 		if strings.HasPrefix(line, "printer") {
 			parts := strings.Fields(line)
 			if len(parts) > 1 {
-				if parts[1] == DefaultPrinterName {
-					printerName = parts[1]
-					break
-				}
-
+				printerName = parts[1]
+				break
 			}
+
 		}
 	}
 	return printerName
@@ -55,7 +71,7 @@ func FindPrinterName() (string, error) {
 
 func FindPrinterOverSSH(remoteHost, username, password string) (string, error) {
 	// Example SSH command to execute lpstat on the remote machine
-	cmd := execCommand("ssh", fmt.Sprintf("%s@%s", username, remoteHost), "lpstat", "-p")
+	cmd := execCommand("ssh", fmt.Sprintf("%s@%s", username, remoteHost), "lpstat", "-d")
 
 	output, err := cmd.CombinedOutput()
 	if err != nil {

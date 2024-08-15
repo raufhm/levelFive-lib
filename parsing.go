@@ -1,3 +1,18 @@
+/*
+Provides utilities for parsing and formatting from structured data
+
+Key Features:
+  - **Parser**: A struct for converting data structures into formatted strings using Go's templating system
+  - **Template Parsing**:
+    The `ParseTemplateTemplateV1`: function allows flexible parsing of any data structure with optional custom
+    functions for advanced formatting.
+  - **Custom Functions**:
+  - `FormatDecimal`: Formats float to a specified precision.
+  - `FormatDate`: Formats `time.Time` objects.
+  - **Use Cases**:
+  - `ParseMessageForPrint`: Generates print-ready strings using a `RootObject`.
+  - `ParseMessageOnly`: Formats messages using a `Ticket` structure.
+*/
 package main
 
 import (

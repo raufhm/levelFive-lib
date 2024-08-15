@@ -24,8 +24,8 @@ func TestHelperProcess(t *testing.T) {
 	args := os.Args[3:]
 
 	if strings.HasPrefix(args[0], "lpstat") {
-		if strings.Contains(args[1], "-p") {
-			// Simulate output of `lpstat -p`
+		if strings.Contains(args[1], "-d") {
+			// Simulate output of `lpstat -d`
 			os.Stdout.WriteString("printer Test_Printer_1 is idle. enabled since Thu 01 Jan 1970 00:00:00 UTC")
 		}
 	} else if strings.HasPrefix(args[0], "ssh") {

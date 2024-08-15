@@ -2,7 +2,7 @@ package main
 
 import "time"
 
-const DefaultPrinterName = "printer levelfive"
+//const DefaultPrinterName = "Test_Printer_1"
 
 type Ticket struct {
 	Terminal    string
