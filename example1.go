@@ -2,7 +2,7 @@ package main
 
 import (
 	"fmt"
-	"log/slog"
+	log "github.com/sirupsen/logrus"
 )
 
 func main() {
@@ -19,22 +19,22 @@ func main() {
 	}
 	fmtStr, err := ps.ParseMessageForPrint(TemplateParseString2, ro)
 	if err != nil {
-		slog.Error("ParseMessageForPrint: err: %v", err)
+		log.Error("ParseMessageForPrint: err: " + err.Error())
 		return
 	}
 	printerName, err := FindPrinterName()
 	if err != nil {
-		slog.Error("FindPrinterName: err: %v", err)
+		log.Error("FindPrinterName: err: " + err.Error())
 		return
 	}
 	if printerName == "" {
-		slog.Error("FindPrinterName: msg: printer not found")
+		log.Error("FindPrinterName: msg: printer not found")
 		return
 	}
 
 	printer := Printer{Name: printerName, Remote: false, RawFile: fmtStr}
 	if err := printer.Do(); err != nil {
-		slog.Error("Do: err: %v", err)
+		log.Error("Do: err: " + err.Error())
 		return
 	}
 
